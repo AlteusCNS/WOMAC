@@ -992,18 +992,6 @@ $("download").addEventListener("click", () => {
 
   const assessmentDate = new Date().toLocaleDateString();
 
-  const languageNames = {
-    en:"English",
-    bn:"Bangla",
-    or:"Odia",
-    ta:"Tamil",
-    te:"Telugu",
-    hi:"Hindi"
-  };
-
-  const selectedLanguage =
-    languageNames[$("questionLanguage").value] || "English";
-
   const total = Number(
     $("totalScore").textContent.split("/")[0].trim()
   );
@@ -1069,12 +1057,6 @@ $("download").addEventListener("click", () => {
   doc.text("Age: " + age + " years",margin+85,y+11);
 
   doc.text("Assessment date: " + assessmentDate,margin,y+19);
-
-  doc.text(
-    "Question language: " + selectedLanguage,
-    margin+85,
-    y+19
-  );
 
   y += 34;
 
