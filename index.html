@@ -1,171 +1,484 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WOMAC Assessment | Plamotab</title>
+<title>Pain relief within reach | Plamotab</title>
+
 <style>
-  :root { --brand:#174b72; --brand2:#2b7898; --ink:#243342; --muted:#647586; --line:#dce5eb; --bg:#f3f7fa; }
-  * { box-sizing:border-box; }
-  body { margin:0; font-family:Arial, Helvetica, sans-serif; background:var(--bg); color:var(--ink); }
-  .wrap { max-width:900px; margin:24px auto; padding:0 16px 40px; }
-  .panel { background:#fff; border:1px solid var(--line); border-radius:16px; padding:24px; box-shadow:0 8px 28px rgba(20,50,70,.06); }
-  header { text-align:center; padding:8px 0 22px; border-bottom:1px solid var(--line); margin-bottom:22px; }
-  .logos { display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:nowrap; margin:0 auto 14px; }
-  .logos img { display:block; max-width: min(150px, 34%); max-height:58px; width:auto; height:auto; object-fit:contain; }
-  .logo-divider { width:1px; height:48px; background:#aebdc8; flex:0 0 1px; }
-  .instructions { background:#eef6fa; border:1px solid #d4e6ef; border-radius:11px; padding:15px 18px; margin:0 0 22px; }
-  .instructions h2 { margin:0 0 8px; padding:0; border:0; font-size:17px; }
-  .instructions ol { margin:0; padding-left:20px; color:#405567; font-size:14px; line-height:1.6; }
-  h1 { font-size:25px; margin:8px 0 6px; color:var(--brand); }
-  .sub { color:var(--muted); font-size:14px; line-height:1.5; margin:0 auto; max-width:680px; }
-  h2 { color:var(--brand); font-size:18px; margin:26px 0 14px; padding-bottom:9px; border-bottom:1px solid var(--line); }
-  .grid { display:grid; grid-template-columns:2fr 1fr 1fr; gap:14px; }
-  label { display:block; font-size:13px; font-weight:700; margin-bottom:7px; }
-  input, select { width:100%; padding:12px; border:1px solid #cbd7df; border-radius:9px; font-size:15px; color:var(--ink); background:#fff; }
-  input:focus, select:focus { outline:2px solid #b9d8e7; border-color:var(--brand2); }
-  .question { padding:14px 0; border-bottom:1px solid #edf1f4; }
-  .qtext { font-size:15px; line-height:1.45; margin-bottom:11px; }
-  .qnum { color:var(--brand); font-weight:700; margin-right:6px; }
-  .choices { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
-  .choice { position:relative; }
-  .choice input { position:absolute; opacity:0; width:1px; height:1px; }
-  .choice span { display:block; text-align:center; border:1px solid #ccd8e0; border-radius:8px; padding:9px 4px; font-size:12px; cursor:pointer; background:#fff; }
-  .choice input:checked + span { background:#e8f3f8; border:2px solid var(--brand2); color:var(--brand); font-weight:700; padding:8px 3px; }
-  .choice input:focus-visible + span { outline:2px solid var(--brand2); }
-  .actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:25px; }
-  button { border:0; border-radius:9px; padding:13px 18px; font-size:15px; font-weight:700; cursor:pointer; }
-  .primary { background:var(--brand); color:#fff; }
-  .secondary { background:#eaf0f4; color:var(--brand); }
-  .note { color:var(--muted); font-size:12px; line-height:1.5; margin-top:14px; }
-  #result { display:none; margin-top:22px; padding:18px; border:1px solid var(--line); border-radius:12px; background:#f8fbfd; }
-  .total-score-card { background:#fff; border:1px solid var(--line); border-radius:10px; padding:16px; margin-top:12px; }
-  .total-score-card strong { display:block; color:var(--brand); font-size:30px; margin-top:5px; }
-  .interpretation { margin-top:14px; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#fff; }
-  .interpretation h3 { margin:0; padding:11px 13px; color:var(--brand); font-size:15px; background:#eef6fa; }
-  .scale-row { display:flex; justify-content:space-between; gap:12px; padding:10px 13px; border-top:1px solid #edf1f4; font-size:14px; }
-  .scale-row.active { background:#e8f3f8; color:var(--brand); font-weight:700; outline:2px solid var(--brand2); outline-offset:-2px; }
-  .scale-range { white-space:nowrap; font-weight:700; }
-  .error { color:#b42318; font-size:13px; margin-top:10px; display:none; }
-  .print-only { display:none; }
-  @media(max-width:650px) {
-    .panel { padding:17px; } .grid { grid-template-columns:1fr; gap:12px; }
-    .choices { gap:4px; } .choice span { font-size:11px; padding:9px 1px; }
-    h1 { font-size:22px; } .scale-row { font-size:13px; }
+:root {
+  --brand:#174b72;
+  --brand2:#2b7898;
+  --ink:#243342;
+  --muted:#647586;
+  --line:#dce5eb;
+  --bg:#f3f7fa;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+}
+.wrap {
+  max-width:900px;
+  margin:24px auto;
+  padding:0 16px 40px;
+}
+.panel {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:24px;
+  box-shadow:0 8px 28px rgba(20,50,70,.06);
+}
+header {
+  text-align:center;
+  padding:8px 0 22px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:22px;
+}
+.logos {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  flex-wrap:nowrap;
+  margin:0 auto 14px;
+}
+.logos img {
+  display:block;
+  max-width:min(150px,34%);
+  max-height:58px;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+}
+.logo-divider {
+  width:1px;
+  height:48px;
+  background:#aebdc8;
+  flex:0 0 1px;
+}
+h1 {
+  font-size:25px;
+  margin:8px 0 6px;
+  color:var(--brand);
+}
+.sub {
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.5;
+  margin:0 auto;
+  max-width:680px;
+}
+h2 {
+  color:var(--brand);
+  font-size:18px;
+  margin:26px 0 14px;
+  padding-bottom:9px;
+  border-bottom:1px solid var(--line);
+}
+.grid {
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:14px;
+}
+label {
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:7px;
+}
+input,select {
+  width:100%;
+  padding:12px;
+  border:1px solid #cbd7df;
+  border-radius:9px;
+  font-size:15px;
+  color:var(--ink);
+  background:#fff;
+}
+input:focus,select:focus {
+  outline:2px solid #b9d8e7;
+  border-color:var(--brand2);
+}
+.question {
+  padding:14px 0;
+  border-bottom:1px solid #edf1f4;
+}
+.qtext {
+  font-size:15px;
+  line-height:1.45;
+  margin-bottom:11px;
+}
+.qnum {
+  color:var(--brand);
+  font-weight:700;
+  margin-right:6px;
+}
+.choices {
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+}
+.choice { position:relative; }
+.choice input {
+  position:absolute;
+  opacity:0;
+  width:1px;
+  height:1px;
+}
+.choice span {
+  display:block;
+  text-align:center;
+  border:1px solid #ccd8e0;
+  border-radius:8px;
+  padding:9px 4px;
+  font-size:12px;
+  cursor:pointer;
+  background:#fff;
+}
+.choice input:checked + span {
+  background:#e8f3f8;
+  border:2px solid var(--brand2);
+  color:var(--brand);
+  font-weight:700;
+  padding:8px 3px;
+}
+.choice input:focus-visible + span {
+  outline:2px solid var(--brand2);
+}
+.actions {
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:25px;
+}
+button {
+  border:0;
+  border-radius:9px;
+  padding:13px 18px;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+}
+.primary {
+  background:var(--brand);
+  color:#fff;
+}
+.secondary {
+  background:#eaf0f4;
+  color:var(--brand);
+}
+.note {
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+  margin-top:14px;
+}
+#result {
+  display:none;
+  margin-top:22px;
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#f8fbfd;
+}
+.total-score-card {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:16px;
+  margin-top:12px;
+}
+.total-score-card strong {
+  display:block;
+  color:var(--brand);
+  font-size:30px;
+  margin-top:5px;
+}
+.interpretation {
+  margin-top:14px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+  background:#fff;
+}
+.interpretation h3 {
+  margin:0;
+  padding:11px 13px;
+  color:var(--brand);
+  font-size:15px;
+  background:#eef6fa;
+}
+.scale-row {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 13px;
+  border-top:1px solid #edf1f4;
+  font-size:14px;
+}
+.scale-row.active {
+  background:#e8f3f8;
+  color:var(--brand);
+  font-weight:700;
+  outline:2px solid var(--brand2);
+  outline-offset:-2px;
+}
+.scale-range {
+  white-space:nowrap;
+  font-weight:700;
+}
+.error {
+  color:#b42318;
+  font-size:13px;
+  margin-top:10px;
+  display:none;
+}
+.print-only { display:none; }
+
+@media(max-width:650px) {
+  .panel { padding:17px; }
+  .grid { grid-template-columns:1fr; gap:12px; }
+  .choices { gap:4px; }
+  .choice span { font-size:11px; padding:9px 1px; }
+  h1 { font-size:22px; }
+  .scale-row { font-size:13px; }
+}
+
+@media print {
+  @page { size:A4; margin:14mm; }
+  body { background:#fff; font-size:11px; }
+  .wrap { max-width:none; margin:0; padding:0; }
+  .panel { border:0; box-shadow:none; padding:0; }
+  header img { width:230px; max-width:70%; max-height:none; }
+  h1 { font-size:20px; }
+  .actions,.note.screen-only,.error {
+    display:none !important;
   }
-  @media print {
-    @page { size:A4; margin:14mm; }
-    body { background:#fff; font-size:11px; }
-    .wrap { max-width:none; margin:0; padding:0; }
-    .panel { border:0; box-shadow:none; padding:0; }
-    header img { width:230px; max-width:70%; max-height:none; }
-    h1 { font-size:20px; }
-    .actions, .note.screen-only, .error { display:none !important; }
-    input, select { border:0; border-bottom:1px solid #aaa; border-radius:0; padding:4px 0; }
-    .question { break-inside:avoid; padding:8px 0; }
-    .choices { gap:5px; }
-    .choice span { padding:5px 2px; font-size:10px; }
-    .choice input:checked + span { border:1px solid #222; background:#eee; padding:5px 2px; }
-    #result { display:block !important; background:#fff; }
-    .print-only { display:block; }
-    h2 { margin-top:18px; }
+  input,select {
+    border:0;
+    border-bottom:1px solid #aaa;
+    border-radius:0;
+    padding:4px 0;
   }
+  .question { break-inside:avoid; padding:8px 0; }
+  .choices { gap:5px; }
+  .choice span { padding:5px 2px; font-size:10px; }
+  .choice input:checked + span {
+    border:1px solid #222;
+    background:#eee;
+    padding:5px 2px;
+  }
+  #result { display:block !important; background:#fff; }
+  .print-only { display:block; }
+  h2 { margin-top:18px; }
+}
 </style>
 </head>
+
 <body>
 <div class="wrap">
-  <main class="panel">
-    <header>
-      <div class="logos">
-        <img src="https://i.ibb.co/chfqZk7q/Untitled-2-1-2.png" alt="Alteus company logo" loading="eager" referrerpolicy="no-referrer">
-        <span class="logo-divider" aria-hidden="true"></span>
-        <img src="https://i.ibb.co/nJd4wry/Plamotab3.png" alt="Plamotab brand logo" loading="eager" referrerpolicy="no-referrer">
-      </div>
-      <h1>WOMAC Osteoarthritis Assessment</h1>
-      <p class="sub">Patient questionnaire for assessing pain, stiffness and physical function.</p>
-    </header>
+<main class="panel">
 
-    <section aria-labelledby="instructionsHeading" style="background:#f2f7fa;border:1px solid #dce8ee;border-radius:12px;padding:16px 18px;margin-bottom:22px">
-      <h2 id="instructionsHeading" style="margin:0 0 10px;border:0;padding:0">Instructions for patients</h2>
-      <ol style="margin:0;padding-left:21px;line-height:1.7;font-size:14px">
-        <li>Enter your name, gender and age in the Patient Information section.</li>
-        <li>Answer all 24 questions about the affected joint, based on how you are feeling today.</li>
-        <li>For each question, select only one number (0, 1, 2, 3 or 4) that best describes your pain, stiffness or difficulty.</li>
-        <li>Use the same number scale for every question: <strong>0, 1, 2, 3 or 4</strong>.</li>
-        <li>After answering every question, select <strong>Calculate Score &amp; View Report</strong>.</li>
-        <li>Select <strong>Download PDF</strong> to download your report.</li>
-      </ol>
-      <p style="font-size:13px;line-height:1.5;margin:10px 0 0;color:#526879"><strong>Response scale:</strong> 0 = None, 1 = Mild, 2 = Moderate, 3 = Severe, 4 = Extreme. Higher scores indicate more symptoms or difficulty. There are no right or wrong answers.</p>
-    </section>
+<header>
+  <div class="logos">
+    <img src="https://i.ibb.co/chfqZk7q/Untitled-2-1-2.png"
+         alt="Alteus company logo"
+         loading="eager"
+         referrerpolicy="no-referrer">
+    <span class="logo-divider" aria-hidden="true"></span>
+    <img src="https://i.ibb.co/nJd4wry/Plamotab3.png"
+         alt="Plamotab brand logo"
+         loading="eager"
+         referrerpolicy="no-referrer">
+  </div>
 
-    <section id="patientDetails">
-      <h2>Patient Information</h2>
-      <div class="grid">
-        <div><label for="patientName">Patient name *</label><input id="patientName" type="text" autocomplete="name" placeholder="Enter full name" required></div>
-        <div><label for="gender">Gender *</label><select id="gender" required><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option><option>Prefer not to say</option></select></div>
-        <div><label for="age">Age (years) *</label><input id="age" type="number" min="1" max="120" inputmode="numeric" placeholder="Age" required></div>
-      </div>
-    </section>
+  <h1>Pain relief within reach</h1>
+  <p class="sub">
+    Patient questionnaire for assessing pain, stiffness and physical function.
+  </p>
+</header>
 
-    <section id="languageSection" style="margin:18px 0 8px">
-      <label for="questionLanguage">Select language for questions *</label>
-      <select id="questionLanguage">
-        <option value="en">English</option>
-        <option value="bn">বাংলা (Bangla)</option>
-        <option value="or">ଓଡ଼ିଆ (Odia)</option>
-        <option value="ta">தமிழ் (Tamil)</option>
-        <option value="te">తెలుగు (Telugu)</option>
-        <option value="hi">हिन्दी (Hindi)</option>
+<section aria-labelledby="instructionsHeading"
+style="background:#f2f7fa;border:1px solid #dce8ee;border-radius:12px;padding:16px 18px;margin-bottom:22px">
+
+  <h2 id="instructionsHeading"
+  style="margin:0 0 10px;border:0;padding:0">
+    Instructions for patients
+  </h2>
+
+  <ol style="margin:0;padding-left:21px;line-height:1.7;font-size:14px">
+    <li>Enter your name, gender and age in the Patient Information section.</li>
+    <li>Answer all 24 questions about the affected joint, based on how you are feeling today.</li>
+    <li>For each question, select only one number (0, 1, 2, 3 or 4) that best describes your pain, stiffness or difficulty.</li>
+    <li>Use the same number scale for every question: <strong>0, 1, 2, 3 or 4</strong>.</li>
+    <li>After answering every question, select <strong>Calculate Score &amp; View Report</strong>.</li>
+    <li>Select <strong>Download PDF</strong> to download your report.</li>
+  </ol>
+
+  <p style="font-size:13px;line-height:1.5;margin:10px 0 0;color:#526879">
+    <strong>Response scale:</strong>
+    0 = None, 1 = Mild, 2 = Moderate, 3 = Severe, 4 = Extreme.
+    Higher scores indicate more symptoms or difficulty.
+    There are no right or wrong answers.
+  </p>
+</section>
+
+<section id="patientDetails">
+  <h2>Patient Information</h2>
+
+  <div class="grid">
+    <div>
+      <label for="patientName">Name *</label>
+      <input id="patientName" type="text"
+      autocomplete="name" placeholder="Enter name" required>
+    </div>
+
+    <div>
+      <label for="gender">Gender *</label>
+      <select id="gender" required>
+        <option value="">Select</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+        <option>Prefer not to say</option>
       </select>
-      <p class="note screen-only" style="margin-top:6px">Choose the language the patient is most comfortable reading. The questions will change to the selected language.</p>
-    </section>
+    </div>
 
-    <form id="womacForm">
-      <section>
-        <h2 id="painHeading">A. Pain</h2>
-        <p class="sub" id="painPrompt" style="text-align:left;margin:0 0 8px">How much pain do you experience in the affected joint:</p>
-        <div id="painQuestions"></div>
-      </section>
-      <section>
-        <h2 id="stiffHeading">B. Stiffness</h2>
-        <p class="sub" id="stiffPrompt" style="text-align:left;margin:0 0 8px">How much stiffness do you experience in the affected joint:</p>
-        <div id="stiffnessQuestions"></div>
-      </section>
-      <section>
-        <h2 id="functionHeading">C. Physical Function</h2>
-        <p class="sub" id="functionPrompt" style="text-align:left;margin:0 0 8px">How much difficulty do you experience while:</p>
-        <div id="functionQuestions"></div>
-      </section>
-      <div class="error" id="error" role="alert">Please complete all patient details and answer all 24 questions before generating the report.</div>
-      <div class="actions">
-        <button type="button" class="primary" id="generate">Calculate score &amp; view report</button>
-        <button type="button" class="secondary" id="download" style="display:none">Download PDF</button>
-        <button type="reset" class="secondary" id="reset">Clear form</button>
-      </div>
-      <p class="note screen-only">Response scale: 0 = None, 1 = Mild, 2 = Moderate, 3 = Severe, 4 = Extreme. Higher scores indicate greater symptom severity. This is an unofficial paraphrased assessment form; use the authorized WOMAC version and its instructions where required for formal clinical or research use.</p>
-    </form>
+    <div>
+      <label for="age">Age (years) *</label>
+      <input id="age" type="number" min="1" max="120"
+      inputmode="numeric" placeholder="Age" required>
+    </div>
+  </div>
+</section>
 
-    <section id="result" aria-live="polite">
-      <h2>Assessment Summary</h2>
-      <div id="summary"></div>
-      <div class="total-score-card">
-        <span style="font-weight:700">Total WOMAC Score (0–96)</span>
-        <strong id="totalScore">—</strong>
-        <div id="scoreCategory" style="margin-top:6px;font-weight:700;color:var(--brand)"></div>
-      </div>
-      <div class="interpretation" id="summaryScale">
-        <h3>Score Interpretation Scale</h3>
-        <div class="scale-row" data-band="mild"><span class="scale-range">0–24</span><span>Mild symptoms</span></div>
-        <div class="scale-row" data-band="moderate"><span class="scale-range">25–48</span><span>Moderate symptoms</span></div>
-        <div class="scale-row" data-band="severe"><span class="scale-range">49–72</span><span>Severe symptoms</span></div>
-        <div class="scale-row" data-band="advanced"><span class="scale-range">73–96</span><span>Advanced OA</span></div>
-      </div>
-      <p class="print-only">Plamotab | WOMAC Osteoarthritis Assessment</p>
-    </section>
-  </main>
+<section id="languageSection" style="margin:18px 0 8px">
+  <label for="questionLanguage">Select language for questions *</label>
+
+  <select id="questionLanguage">
+    <option value="en">English</option>
+    <option value="bn">বাংলা (Bangla)</option>
+    <option value="or">ଓଡ଼ିଆ (Odia)</option>
+    <option value="ta">தமிழ் (Tamil)</option>
+    <option value="te">తెలుగు (Telugu)</option>
+    <option value="hi">हिन्दी (Hindi)</option>
+  </select>
+
+  <p class="note screen-only" style="margin-top:6px">
+    Choose the language the patient is most comfortable reading.
+    The questions will change to the selected language.
+  </p>
+</section>
+
+<form id="womacForm">
+
+  <section>
+    <h2 id="painHeading">A. Pain</h2>
+    <p class="sub" id="painPrompt" style="text-align:left;margin:0 0 8px">
+      How much pain do you experience in the affected joint:
+    </p>
+    <div id="painQuestions"></div>
+  </section>
+
+  <section>
+    <h2 id="stiffHeading">B. Stiffness</h2>
+    <p class="sub" id="stiffPrompt" style="text-align:left;margin:0 0 8px">
+      How much stiffness do you experience in the affected joint:
+    </p>
+    <div id="stiffnessQuestions"></div>
+  </section>
+
+  <section>
+    <h2 id="functionHeading">C. Physical Function</h2>
+    <p class="sub" id="functionPrompt" style="text-align:left;margin:0 0 8px">
+      How much difficulty do you experience while:
+    </p>
+    <div id="functionQuestions"></div>
+  </section>
+
+  <div class="error" id="error" role="alert">
+    Please complete all patient details and answer all 24 questions before generating the report.
+  </div>
+
+  <div class="actions">
+    <button type="button" class="primary" id="generate">
+      Calculate score &amp; view report
+    </button>
+
+    <button type="button" class="secondary" id="download" style="display:none">
+      Download PDF
+    </button>
+
+    <button type="reset" class="secondary" id="reset">
+      Clear form
+    </button>
+  </div>
+
+  <p class="note screen-only">
+    Response scale: 0 = None, 1 = Mild, 2 = Moderate,
+    3 = Severe, 4 = Extreme. Higher scores indicate greater symptom severity.
+    This is an unofficial paraphrased assessment form; use the authorized WOMAC
+    version and its instructions where required for formal clinical or research use.
+  </p>
+
+</form>
+
+<section id="result" aria-live="polite">
+  <h2>Assessment Summary</h2>
+
+  <div id="summary"></div>
+
+  <div class="total-score-card">
+    <span style="font-weight:700">Total WOMAC Score (0–96)</span>
+    <strong id="totalScore">—</strong>
+    <div id="scoreCategory"
+    style="margin-top:6px;font-weight:700;color:var(--brand)"></div>
+  </div>
+
+  <div class="interpretation" id="summaryScale">
+    <h3>Score Interpretation Scale</h3>
+
+    <div class="scale-row" data-band="mild">
+      <span class="scale-range">0–24</span>
+      <span>Mild symptoms</span>
+    </div>
+
+    <div class="scale-row" data-band="moderate">
+      <span class="scale-range">25–48</span>
+      <span>Moderate symptoms</span>
+    </div>
+
+    <div class="scale-row" data-band="severe">
+      <span class="scale-range">49–72</span>
+      <span>Severe symptoms</span>
+    </div>
+
+    <div class="scale-row" data-band="advanced">
+      <span class="scale-range">73–96</span>
+      <span>Advanced OA</span>
+    </div>
+  </div>
+
+  <p class="print-only">Plamotab | WOMAC Osteoarthritis Assessment</p>
+</section>
+
+</main>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" onerror="var fallback=document.createElement('script');fallback.src='https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js';document.head.appendChild(fallback);"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+onerror="var fallback=document.createElement('script');fallback.src='https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js';document.head.appendChild(fallback);">
+</script>
+
 <script>
+
+// ASSESSMENT QUESTIONS
+
 const groups = {
   pain: [
     "While walking on a flat surface?",
@@ -174,10 +487,12 @@ const groups = {
     "While sitting or lying down?",
     "While standing upright?"
   ],
+
   stiffness: [
     "After first waking up in the morning?",
     "After sitting, lying or resting later in the day?"
   ],
+
   physical: [
     "Descending stairs?",
     "Ascending stairs?",
@@ -199,285 +514,738 @@ const groups = {
   ]
 };
 
-// Patient-facing translations of the assessment items. Numerical response options (0–4) remain unchanged.
+
+// MULTILINGUAL QUESTIONS
+
 const translations = {
+
   en: {
     headings: ["A. Pain", "B. Stiffness", "C. Physical Function"],
-    prompts: ["How much pain do you experience in the affected joint:", "How much stiffness do you experience in the affected joint:", "How much difficulty do you experience while:"],
+    prompts: [
+      "How much pain do you experience in the affected joint:",
+      "How much stiffness do you experience in the affected joint:",
+      "How much difficulty do you experience while:"
+    ],
     groups
   },
+
   bn: {
     headings: ["A. ব্যথা", "B. জড়তা", "C. দৈনন্দিন কাজকর্মে অসুবিধা"],
-    prompts: ["আক্রান্ত জয়েন্টে আপনার কতটা ব্যথা হয়:", "আক্রান্ত জয়েন্টে আপনার কতটা জড়তা অনুভূত হয়:", "নিচের কাজগুলি করতে আপনার কতটা অসুবিধা হয়:"],
+    prompts: [
+      "আক্রান্ত জয়েন্টে আপনার কতটা ব্যথা হয়:",
+      "আক্রান্ত জয়েন্টে আপনার কতটা জড়তা অনুভূত হয়:",
+      "নিচের কাজগুলি করতে আপনার কতটা অসুবিধা হয়:"
+    ],
     groups: {
-      pain: ["সমতল পথে হাঁটার সময়?", "সিঁড়ি দিয়ে ওঠা বা নামার সময়?", "রাতে বিছানায় শুয়ে থাকার সময়?", "বসে থাকা বা শুয়ে থাকার সময়?", "সোজা হয়ে দাঁড়িয়ে থাকার সময়?"],
-      stiffness: ["সকালে ঘুম থেকে ওঠার পর?", "দিনের অন্য সময়ে বসে, শুয়ে বা বিশ্রাম নেওয়ার পর?"],
-      physical: ["সিঁড়ি দিয়ে নামা?", "সিঁড়ি দিয়ে ওঠা?", "বসা অবস্থা থেকে উঠে দাঁড়ানো?", "দাঁড়িয়ে থাকা?", "মেঝে থেকে কোনো জিনিস তুলতে নিচু হওয়া?", "সমতল পথে হাঁটা?", "গাড়িতে ওঠা বা গাড়ি থেকে নামা?", "কেনাকাটা করতে যাওয়া?", "মোজা বা স্টকিংস পরা?", "বিছানা থেকে ওঠা?", "মোজা বা স্টকিংস খোলা?", "বিছানায় শুয়ে থাকা?", "বাথটাবে ওঠা বা বাথটাব থেকে নামা?", "বসে থাকা?", "কমোডে বসা বা কমোড থেকে ওঠা?", "ভারী ঘরের কাজ করা?", "হালকা ঘরের কাজ করা?"]
+      pain: [
+        "সমতল পথে হাঁটার সময়?",
+        "সিঁড়ি দিয়ে ওঠা বা নামার সময়?",
+        "রাতে বিছানায় শুয়ে থাকার সময়?",
+        "বসে থাকা বা শুয়ে থাকার সময়?",
+        "সোজা হয়ে দাঁড়িয়ে থাকার সময়?"
+      ],
+      stiffness: [
+        "সকালে ঘুম থেকে ওঠার পর?",
+        "দিনের অন্য সময়ে বসে, শুয়ে বা বিশ্রাম নেওয়ার পর?"
+      ],
+      physical: [
+        "সিঁড়ি দিয়ে নামা?",
+        "সিঁড়ি দিয়ে ওঠা?",
+        "বসা অবস্থা থেকে উঠে দাঁড়ানো?",
+        "দাঁড়িয়ে থাকা?",
+        "মেঝে থেকে কোনো জিনিস তুলতে নিচু হওয়া?",
+        "সমতল পথে হাঁটা?",
+        "গাড়িতে ওঠা বা গাড়ি থেকে নামা?",
+        "কেনাকাটা করতে যাওয়া?",
+        "মোজা বা স্টকিংস পরা?",
+        "বিছানা থেকে ওঠা?",
+        "মোজা বা স্টকিংস খোলা?",
+        "বিছানায় শুয়ে থাকা?",
+        "বাথটাবে ওঠা বা বাথটাব থেকে নামা?",
+        "বসে থাকা?",
+        "কমোডে বসা বা কমোড থেকে ওঠা?",
+        "ভারী ঘরের কাজ করা?",
+        "হালকা ঘরের কাজ করা?"
+      ]
     }
   },
+
   or: {
     headings: ["A. ଯନ୍ତ୍ରଣା", "B. ଜଡ଼ତା", "C. ଶାରୀରିକ କାର୍ଯ୍ୟରେ ଅସୁବିଧା"],
-    prompts: ["ପ୍ରଭାବିତ ଗଣ୍ଠିରେ ଆପଣ କେତେ ଯନ୍ତ୍ରଣା ଅନୁଭବ କରନ୍ତି:", "ପ୍ରଭାବିତ ଗଣ୍ଠିରେ ଆପଣ କେତେ ଜଡ଼ତା ଅନୁଭବ କରନ୍ତି:", "ନିମ୍ନଲିଖିତ କାମ କରିବାବେଳେ ଆପଣଙ୍କୁ କେତେ ଅସୁବିଧା ହୁଏ:"],
+    prompts: [
+      "ପ୍ରଭାବିତ ଗଣ୍ଠିରେ ଆପଣ କେତେ ଯନ୍ତ୍ରଣା ଅନୁଭବ କରନ୍ତି:",
+      "ପ୍ରଭାବିତ ଗଣ୍ଠିରେ ଆପଣ କେତେ ଜଡ଼ତା ଅନୁଭବ କରନ୍ତି:",
+      "ନିମ୍ନଲିଖିତ କାମ କରିବାବେଳେ ଆପଣଙ୍କୁ କେତେ ଅସୁବିଧା ହୁଏ:"
+    ],
     groups: {
-      pain: ["ସମତଳ ରାସ୍ତାରେ ଚାଲିବାବେଳେ?", "ସିଡ଼ି ଚଢ଼ିବା କିମ୍ବା ଓହ୍ଲାଇବାବେଳେ?", "ରାତିରେ ବିଛଣାରେ ଶୋଇଥିବାବେଳେ?", "ବସିଥିବା କିମ୍ବା ଶୋଇଥିବାବେଳେ?", "ସିଧା ହୋଇ ଠିଆ ହୋଇଥିବାବେଳେ?"],
-      stiffness: ["ସକାଳେ ପ୍ରଥମେ ଉଠିବା ପରେ?", "ଦିନର ଅନ୍ୟ ସମୟରେ ବସିବା, ଶୋଇବା କିମ୍ବା ବିଶ୍ରାମ ପରେ?"],
-      physical: ["ସିଡ଼ିରୁ ଓହ୍ଲାଇବା?", "ସିଡ଼ି ଚଢ଼ିବା?", "ବସିଥିବା ଅବସ୍ଥାରୁ ଉଠିବା?", "ଠିଆ ହେବା?", "ଭୂମିରୁ କୌଣସି ଜିନିଷ ଉଠାଇବା ପାଇଁ ନଇଁବା?", "ସମତଳ ରାସ୍ତାରେ ଚାଲିବା?", "ଗାଡ଼ିରେ ଚଢ଼ିବା କିମ୍ବା ଓହ୍ଲାଇବା?", "ବଜାର କରିବାକୁ ଯିବା?", "ମୋଜା ପିନ୍ଧିବା?", "ବିଛଣାରୁ ଉଠିବା?", "ମୋଜା କାଢ଼ିବା?", "ବିଛଣାରେ ଶୋଇବା?", "ସ୍ନାନ ଟବ୍‌ରେ ପଶିବା କିମ୍ବା ବାହାରିବା?", "ବସିବା?", "ଶୌଚାଳୟର କମୋଡ୍‌ରେ ବସିବା କିମ୍ବା ଉଠିବା?", "ଭାରୀ ଘରୋଇ କାମ କରିବା?", "ହାଲୁକା ଘରୋଇ କାମ କରିବା?"]
+      pain: [
+        "ସମତଳ ରାସ୍ତାରେ ଚାଲିବାବେଳେ?",
+        "ସିଡ଼ି ଚଢ଼ିବା କିମ୍ବା ଓହ୍ଲାଇବାବେଳେ?",
+        "ରାତିରେ ବିଛଣାରେ ଶୋଇଥିବାବେଳେ?",
+        "ବସିଥିବା କିମ୍ବା ଶୋଇଥିବାବେଳେ?",
+        "ସିଧା ହୋଇ ଠିଆ ହୋଇଥିବାବେଳେ?"
+      ],
+      stiffness: [
+        "ସକାଳେ ପ୍ରଥମେ ଉଠିବା ପରେ?",
+        "ଦିନର ଅନ୍ୟ ସମୟରେ ବସିବା, ଶୋଇବା କିମ୍ବା ବିଶ୍ରାମ ପରେ?"
+      ],
+      physical: [
+        "ସିଡ଼ିରୁ ଓହ୍ଲାଇବା?",
+        "ସିଡ଼ି ଚଢ଼ିବା?",
+        "ବସିଥିବା ଅବସ୍ଥାରୁ ଉଠିବା?",
+        "ଠିଆ ହେବା?",
+        "ଭୂମିରୁ କୌଣସି ଜିନିଷ ଉଠାଇବା ପାଇଁ ନଇଁବା?",
+        "ସମତଳ ରାସ୍ତାରେ ଚାଲିବା?",
+        "ଗାଡ଼ିରେ ଚଢ଼ିବା କିମ୍ବା ଓହ୍ଲାଇବା?",
+        "ବଜାର କରିବାକୁ ଯିବା?",
+        "ମୋଜା ପିନ୍ଧିବା?",
+        "ବିଛଣାରୁ ଉଠିବା?",
+        "ମୋଜା କାଢ଼ିବା?",
+        "ବିଛଣାରେ ଶୋଇବା?",
+        "ସ୍ନାନ ଟବ୍‌ରେ ପଶିବା କିମ୍ବା ବାହାରିବା?",
+        "ବସିବା?",
+        "ଶୌଚାଳୟର କମୋଡ୍‌ରେ ବସିବା କିମ୍ବା ଉଠିବା?",
+        "ଭାରୀ ଘରୋଇ କାମ କରିବା?",
+        "ହାଲୁକା ଘରୋଇ କାମ କରିବା?"
+      ]
     }
   },
+
   ta: {
     headings: ["A. வலி", "B. விறைப்பு", "C. உடல் செயல்பாட்டுச் சிரமம்"],
-    prompts: ["பாதிக்கப்பட்ட மூட்டில் உங்களுக்கு எவ்வளவு வலி ஏற்படுகிறது:", "பாதிக்கப்பட்ட மூட்டில் உங்களுக்கு எவ்வளவு விறைப்பு ஏற்படுகிறது:", "பின்வரும் செயல்களைச் செய்யும்போது உங்களுக்கு எவ்வளவு சிரமம் ஏற்படுகிறது:"],
+    prompts: [
+      "பாதிக்கப்பட்ட மூட்டில் உங்களுக்கு எவ்வளவு வலி ஏற்படுகிறது:",
+      "பாதிக்கப்பட்ட மூட்டில் உங்களுக்கு எவ்வளவு விறைப்பு ஏற்படுகிறது:",
+      "பின்வரும் செயல்களைச் செய்யும்போது உங்களுக்கு எவ்வளவு சிரமம் ஏற்படுகிறது:"
+    ],
     groups: {
-      pain: ["சமமான தரையில் நடக்கும்போது?", "படிகளில் ஏறும்போது அல்லது இறங்கும்போது?", "இரவில் படுக்கையில் படுத்திருக்கும்போது?", "உட்கார்ந்திருக்கும்போது அல்லது படுத்திருக்கும்போது?", "நிமிர்ந்து நிற்கும்போது?"],
-      stiffness: ["காலையில் முதலில் எழுந்தவுடன்?", "நாளின் பிற்பகுதியில் உட்கார்ந்த பிறகு, படுத்த பிறகு அல்லது ஓய்வெடுத்த பிறகு?"],
-      physical: ["படிகளில் இறங்குவது?", "படிகளில் ஏறுவது?", "உட்கார்ந்த நிலையிலிருந்து எழுவது?", "நிற்பது?", "தரையிலிருந்து ஒரு பொருளை எடுக்கக் குனிவது?", "சமமான தரையில் நடப்பது?", "காரில் ஏறுவது அல்லது இறங்குவது?", "கடைக்குச் சென்று பொருட்கள் வாங்குவது?", "காலுறைகளை அணிவது?", "படுக்கையிலிருந்து எழுவது?", "காலுறைகளைக் கழற்றுவது?", "படுக்கையில் படுத்திருப்பது?", "குளியல் தொட்டிக்குள் செல்வது அல்லது வெளியே வருவது?", "உட்காருவது?", "கழிப்பறை இருக்கையில் உட்காருவது அல்லது எழுவது?", "கடினமான வீட்டு வேலைகளைச் செய்வது?", "எளிய வீட்டு வேலைகளைச் செய்வது?"]
+      pain: [
+        "சமமான தரையில் நடக்கும்போது?",
+        "படிகளில் ஏறும்போது அல்லது இறங்கும்போது?",
+        "இரவில் படுக்கையில் படுத்திருக்கும்போது?",
+        "உட்கார்ந்திருக்கும்போது அல்லது படுத்திருக்கும்போது?",
+        "நிமிர்ந்து நிற்கும்போது?"
+      ],
+      stiffness: [
+        "காலையில் முதலில் எழுந்தவுடன்?",
+        "நாளின் பிற்பகுதியில் உட்கார்ந்த பிறகு, படுத்த பிறகு அல்லது ஓய்வெடுத்த பிறகு?"
+      ],
+      physical: [
+        "படிகளில் இறங்குவது?",
+        "படிகளில் ஏறுவது?",
+        "உட்கார்ந்த நிலையிலிருந்து எழுவது?",
+        "நிற்பது?",
+        "தரையிலிருந்து ஒரு பொருளை எடுக்கக் குனிவது?",
+        "சமமான தரையில் நடப்பது?",
+        "காரில் ஏறுவது அல்லது இறங்குவது?",
+        "கடைக்குச் சென்று பொருட்கள் வாங்குவது?",
+        "காலுறைகளை அணிவது?",
+        "படுக்கையிலிருந்து எழுவது?",
+        "காலுறைகளைக் கழற்றுவது?",
+        "படுக்கையில் படுத்திருப்பது?",
+        "குளியல் தொட்டிக்குள் செல்வது அல்லது வெளியே வருவது?",
+        "உட்காருவது?",
+        "கழிப்பறை இருக்கையில் உட்காருவது அல்லது எழுவது?",
+        "கடினமான வீட்டு வேலைகளைச் செய்வது?",
+        "எளிய வீட்டு வேலைகளைச் செய்வது?"
+      ]
     }
   },
+
   te: {
     headings: ["A. నొప్పి", "B. బిగుతు", "C. శారీరక పనులు చేయడంలో ఇబ్బంది"],
-    prompts: ["ప్రభావిత కీళ్లలో మీకు ఎంత నొప్పి ఉంటుంది:", "ప్రభావిత కీళ్లలో మీకు ఎంత బిగుతుగా అనిపిస్తుంది:", "క్రింది పనులు చేసేటప్పుడు మీకు ఎంత ఇబ్బంది కలుగుతుంది:"],
+    prompts: [
+      "ప్రభావిత కీళ్లలో మీకు ఎంత నొప్పి ఉంటుంది:",
+      "ప్రభావిత కీళ్లలో మీకు ఎంత బిగుతుగా అనిపిస్తుంది:",
+      "క్రింది పనులు చేసేటప్పుడు మీకు ఎంత ఇబ్బంది కలుగుతుంది:"
+    ],
     groups: {
-      pain: ["సమతలమైన నేలపై నడిచేటప్పుడు?", "మెట్లు ఎక్కేటప్పుడు లేదా దిగేటప్పుడు?", "రాత్రి మంచంపై పడుకున్నప్పుడు?", "కూర్చున్నప్పుడు లేదా పడుకున్నప్పుడు?", "నిటారుగా నిలబడినప్పుడు?"],
-      stiffness: ["ఉదయం నిద్రలేచిన వెంటనే?", "రోజులో తర్వాతి సమయంలో కూర్చున్న తర్వాత, పడుకున్న తర్వాత లేదా విశ్రాంతి తీసుకున్న తర్వాత?"],
-      physical: ["మెట్లు దిగడం?", "మెట్లు ఎక్కడం?", "కూర్చున్న స్థితి నుంచి లేవడం?", "నిలబడటం?", "నేలపై ఉన్న వస్తువును తీసుకోవడానికి వంగడం?", "సమతలమైన నేలపై నడవడం?", "కారులోకి ఎక్కడం లేదా కారు నుంచి దిగడం?", "షాపింగ్‌కు వెళ్లడం?", "సాక్సులు తొడుక్కోవడం?", "మంచం నుంచి లేవడం?", "సాక్సులు తీసేయడం?", "మంచంపై పడుకోవడం?", "స్నానపు తొట్టిలోకి వెళ్లడం లేదా బయటకు రావడం?", "కూర్చోవడం?", "మరుగుదొడ్డి సీటుపై కూర్చోవడం లేదా లేవడం?", "భారీ ఇంటి పనులు చేయడం?", "తేలికపాటి ఇంటి పనులు చేయడం?"]
+      pain: [
+        "సమతలమైన నేలపై నడిచేటప్పుడు?",
+        "మెట్లు ఎక్కేటప్పుడు లేదా దిగేటప్పుడు?",
+        "రాత్రి మంచంపై పడుకున్నప్పుడు?",
+        "కూర్చున్నప్పుడు లేదా పడుకున్నప్పుడు?",
+        "నిటారుగా నిలబడినప్పుడు?"
+      ],
+      stiffness: [
+        "ఉదయం నిద్రలేచిన వెంటనే?",
+        "రోజులో తర్వాతి సమయంలో కూర్చున్న తర్వాత, పడుకున్న తర్వాత లేదా విశ్రాంతి తీసుకున్న తర్వాత?"
+      ],
+      physical: [
+        "మెట్లు దిగడం?",
+        "మెట్లు ఎక్కడం?",
+        "కూర్చున్న స్థితి నుంచి లేవడం?",
+        "నిలబడటం?",
+        "నేలపై ఉన్న వస్తువును తీసుకోవడానికి వంగడం?",
+        "సమతలమైన నేలపై నడవడం?",
+        "కారులోకి ఎక్కడం లేదా కారు నుంచి దిగడం?",
+        "షాపింగ్‌కు వెళ్లడం?",
+        "సాక్సులు తొడుక్కోవడం?",
+        "మంచం నుంచి లేవడం?",
+        "సాక్సులు తీసేయడం?",
+        "మంచంపై పడుకోవడం?",
+        "స్నానపు తొట్టిలోకి వెళ్లడం లేదా బయటకు రావడం?",
+        "కూర్చోవడం?",
+        "మరుగుదొడ్డి సీటుపై కూర్చోవడం లేదా లేవడం?",
+        "భారీ ఇంటి పనులు చేయడం?",
+        "తేలికపాటి ఇంటి పనులు చేయడం?"
+      ]
     }
   },
+
   hi: {
     headings: ["A. दर्द", "B. अकड़न", "C. शारीरिक गतिविधियों में कठिनाई"],
-    prompts: ["प्रभावित जोड़ में आपको कितना दर्द होता है:", "प्रभावित जोड़ में आपको कितनी अकड़न महसूस होती है:", "निम्नलिखित काम करते समय आपको कितनी कठिनाई होती है:"],
+    prompts: [
+      "प्रभावित जोड़ में आपको कितना दर्द होता है:",
+      "प्रभावित जोड़ में आपको कितनी अकड़न महसूस होती है:",
+      "निम्नलिखित काम करते समय आपको कितनी कठिनाई होती है:"
+    ],
     groups: {
-      pain: ["समतल सतह पर चलते समय?", "सीढ़ियाँ चढ़ते या उतरते समय?", "रात में बिस्तर पर लेटे हुए?", "बैठे या लेटे हुए?", "सीधे खड़े रहते समय?"],
-      stiffness: ["सुबह पहली बार उठने के बाद?", "दिन में बाद में बैठने, लेटने या आराम करने के बाद?"],
-      physical: ["सीढ़ियों से नीचे उतरना?", "सीढ़ियाँ चढ़ना?", "बैठी हुई स्थिति से उठना?", "खड़े रहना?", "फर्श से कोई वस्तु उठाने के लिए झुकना?", "समतल सतह पर चलना?", "कार में बैठना या कार से उतरना?", "खरीदारी करने जाना?", "मोज़े पहनना?", "बिस्तर से उठना?", "मोज़े उतारना?", "बिस्तर पर लेटना?", "नहाने के टब में बैठना या उससे बाहर निकलना?", "बैठना?", "शौचालय की सीट पर बैठना या उससे उठना?", "भारी घरेलू काम करना?", "हल्के घरेलू काम करना?"]
+      pain: [
+        "समतल सतह पर चलते समय?",
+        "सीढ़ियाँ चढ़ते या उतरते समय?",
+        "रात में बिस्तर पर लेटे हुए?",
+        "बैठे या लेटे हुए?",
+        "सीधे खड़े रहते समय?"
+      ],
+      stiffness: [
+        "सुबह पहली बार उठने के बाद?",
+        "दिन में बाद में बैठने, लेटने या आराम करने के बाद?"
+      ],
+      physical: [
+        "सीढ़ियों से नीचे उतरना?",
+        "सीढ़ियाँ चढ़ना?",
+        "बैठी हुई स्थिति से उठना?",
+        "खड़े रहना?",
+        "फर्श से कोई वस्तु उठाने के लिए झुकना?",
+        "समतल सतह पर चलना?",
+        "कार में बैठना या कार से उतरना?",
+        "खरीदारी करने जाना?",
+        "मोज़े पहनना?",
+        "बिस्तर से उठना?",
+        "मोज़े उतारना?",
+        "बिस्तर पर लेटना?",
+        "नहाने के टब में बैठना या उससे बाहर निकलना?",
+        "बैठना?",
+        "शौचालय की सीट पर बैठना या उससे उठना?",
+        "भारी घरेलू काम करना?",
+        "हल्के घरेलू काम करना?"
+      ]
     }
   }
+
 };
 
-const categoryIds = ["painQuestions", "stiffnessQuestions", "functionQuestions"];
+
+// QUESTION RENDERING
+
+const categoryIds = [
+  "painQuestions",
+  "stiffnessQuestions",
+  "functionQuestions"
+];
+
 const categoryKeys = ["pain", "stiffness", "physical"];
 const options = ["0","1","2","3","4"];
+
 let questionNumber = 0;
+
+const $ = id => document.getElementById(id);
+
 function renderQuestions(language) {
+
   const t = translations[language] || translations.en;
+
   $("painHeading").textContent = t.headings[0];
   $("stiffHeading").textContent = t.headings[1];
   $("functionHeading").textContent = t.headings[2];
+
   $("painPrompt").textContent = t.prompts[0];
   $("stiffPrompt").textContent = t.prompts[1];
   $("functionPrompt").textContent = t.prompts[2];
+
   questionNumber = 0;
+
   categoryIds.forEach((id, groupIndex) => {
+
     const host = $(id);
     host.innerHTML = "";
+
     const items = t.groups[categoryKeys[groupIndex]];
+
     items.forEach((question) => {
+
       questionNumber++;
+
       const n = questionNumber;
+
       const block = document.createElement("div");
       block.className = "question";
+
       const qtext = document.createElement("div");
       qtext.className = "qtext";
+
       const qnum = document.createElement("span");
       qnum.className = "qnum";
       qnum.textContent = n + ".";
+
       qtext.appendChild(qnum);
       qtext.appendChild(document.createTextNode(" " + question));
+
       const choices = document.createElement("div");
       choices.className = "choices";
-      choices.setAttribute("role", "radiogroup");
-      choices.setAttribute("aria-label", "Question " + n);
-      options.forEach((label, score) => {
+      choices.setAttribute("role","radiogroup");
+      choices.setAttribute("aria-label","Question " + n);
+
+      options.forEach((label,score) => {
+
         const choiceLabel = document.createElement("label");
         choiceLabel.className = "choice";
+
         const input = document.createElement("input");
         input.type = "radio";
         input.name = "q" + n;
         input.value = score;
+
         const span = document.createElement("span");
         span.textContent = label;
+
         choiceLabel.appendChild(input);
         choiceLabel.appendChild(span);
+
         choices.appendChild(choiceLabel);
       });
+
       block.appendChild(qtext);
       block.appendChild(choices);
+
       host.appendChild(block);
+
     });
   });
 }
-const $ = id => document.getElementById(id);
+
+
+// INITIALIZATION
+
 let lastReportReady = false;
+
 renderQuestions("en");
+
 $("questionLanguage").addEventListener("change", () => {
-  // Changing language clears existing responses so answers cannot be misread across translations.
+
+  // Changing language clears existing responses.
   renderQuestions($("questionLanguage").value);
+
   $("result").style.display = "none";
   $("download").style.display = "none";
+
   lastReportReady = false;
 });
 
+
+// GET ANSWERS
+
 function getAnswers() {
+
   const answers = [];
+
   for (let i = 1; i <= 24; i++) {
-    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+
+    const selected = document.querySelector(
+      `input[name="q${i}"]:checked`
+    );
+
     if (!selected) return null;
+
     answers.push(Number(selected.value));
   }
+
   return answers;
 }
+
+
+// ERROR HANDLING
+
 function showError(message) {
+
   $("error").textContent = message;
   $("error").style.display = "block";
 }
+
+
+// SCORE INTERPRETATION
+
 function getScoreBand(score) {
-  if (score <= 24) return { key: "mild", label: "Mild symptoms" };
-  if (score <= 48) return { key: "moderate", label: "Moderate symptoms" };
-  if (score <= 72) return { key: "severe", label: "Severe symptoms" };
-  return { key: "advanced", label: "Advanced OA" };
+
+  if (score <= 24)
+    return {key:"mild",label:"Mild symptoms"};
+
+  if (score <= 48)
+    return {key:"moderate",label:"Moderate symptoms"};
+
+  if (score <= 72)
+    return {key:"severe",label:"Severe symptoms"};
+
+  return {key:"advanced",label:"Advanced OA"};
 }
+
+
+// GENERATE ASSESSMENT SUMMARY
+
 $("generate").addEventListener("click", () => {
+
   const name = $("patientName").value.trim();
   const gender = $("gender").value;
   const age = Number($("age").value);
+
   const answers = getAnswers();
+
   if (!name || !gender || !age || age < 1 || age > 120 || !answers) {
-    showError("Please enter a valid name, select gender, enter an age from 1 to 120, and answer all 24 questions.");
+
+    showError(
+      "Please enter a valid name, select gender, enter an age from 1 to 120, and answer all 24 questions."
+    );
+
     return;
   }
+
   $("error").style.display = "none";
-  const total = answers.reduce((a,b)=>a+b,0);
+
+  const total = answers.reduce((a,b) => a+b,0);
   const band = getScoreBand(total);
-  $("summary").innerHTML = `<p><strong>Patient:</strong> ${escapeHTML(name)} &nbsp; | &nbsp; <strong>Gender:</strong> ${escapeHTML(gender)} &nbsp; | &nbsp; <strong>Age:</strong> ${age} years</p><p><strong>Assessment date:</strong> ${new Date().toLocaleDateString()}</p>`;
+
+  $("summary").innerHTML =
+    `<p><strong>Name:</strong> ${escapeHTML(name)}
+    &nbsp; | &nbsp;
+    <strong>Gender:</strong> ${escapeHTML(gender)}
+    &nbsp; | &nbsp;
+    <strong>Age:</strong> ${age} years</p>
+    <p><strong>Assessment date:</strong>
+    ${new Date().toLocaleDateString()}</p>`;
+
   $("totalScore").textContent = total + " / 96";
+
   $("scoreCategory").textContent = band.label;
-  document.querySelectorAll("#summaryScale .scale-row").forEach(row => row.classList.toggle("active", row.dataset.band === band.key));
+
+  document.querySelectorAll("#summaryScale .scale-row")
+    .forEach(row => {
+      row.classList.toggle(
+        "active",
+        row.dataset.band === band.key
+      );
+    });
+
   $("result").style.display = "block";
   $("download").style.display = "inline-block";
+
   lastReportReady = true;
-  $("result").scrollIntoView({behavior:"smooth", block:"start"});
+
+  $("result").scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+
 });
+
+
+// HTML ESCAPING
+
 function escapeHTML(value) {
-  return value.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+  return value.replace(/[&<>"']/g, c => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[c]));
+
 }
+
+
+// PDF DOWNLOAD
+
 $("download").addEventListener("click", () => {
+
   if (!lastReportReady) return;
 
-  // Generate and download a standalone PDF report (no print dialog).
   if (!window.jspdf || !window.jspdf.jsPDF) {
-    showError("The PDF tool could not load. Open this assessment in Safari or Chrome with an internet connection, then try Download PDF again. Do not open it in the iPhone Files preview.");
+
+    showError(
+      "The PDF tool could not load. Open this assessment in Safari or Chrome with an internet connection, then try Download PDF again. Do not open it in the iPhone Files preview."
+    );
+
     return;
   }
 
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: "mm", format: "a4" });
+  const {jsPDF} = window.jspdf;
+
+  const doc = new jsPDF({
+    unit:"mm",
+    format:"a4"
+  });
+
   const name = $("patientName").value.trim();
   const gender = $("gender").value;
   const age = $("age").value;
+
   const assessmentDate = new Date().toLocaleDateString();
-  const languageNames = { en: "English", bn: "Bangla", or: "Odia", ta: "Tamil", te: "Telugu", hi: "Hindi" };
-  const selectedLanguage = languageNames[$("questionLanguage").value] || "English";
-  const total = Number($("totalScore").textContent.split("/")[0].trim());
+
+  const languageNames = {
+    en:"English",
+    bn:"Bangla",
+    or:"Odia",
+    ta:"Tamil",
+    te:"Telugu",
+    hi:"Hindi"
+  };
+
+  const selectedLanguage =
+    languageNames[$("questionLanguage").value] || "English";
+
+  const total = Number(
+    $("totalScore").textContent.split("/")[0].trim()
+  );
+
   const band = getScoreBand(total);
 
   const pageWidth = doc.internal.pageSize.getWidth();
+
   const margin = 18;
+
   const contentWidth = pageWidth - margin * 2;
+
   let y = 20;
 
-  // Header
-  doc.setFillColor(23, 75, 114);
-  doc.rect(0, 0, pageWidth, 38, "F");
-  doc.setTextColor(255, 255, 255);
-  doc.setFont("helvetica", "bold");
+
+  // PDF HEADER
+
+  doc.setFillColor(23,75,114);
+  doc.rect(0,0,pageWidth,38,"F");
+
+  doc.setTextColor(255,255,255);
+
+  doc.setFont("helvetica","bold");
   doc.setFontSize(17);
-  doc.text("WOMAC Osteoarthritis Assessment", margin, 17);
-  doc.setFont("helvetica", "normal");
+
+  doc.text("Pain relief within reach",margin,17);
+
+  doc.setFont("helvetica","normal");
   doc.setFontSize(9);
-  doc.text("PATIENT SUMMARY REPORT", margin, 26);
-  doc.setTextColor(36, 51, 66);
+
+  doc.text("PATIENT SUMMARY REPORT",margin,26);
+
+  doc.setTextColor(36,51,66);
+
   y = 50;
 
-  // Patient details
-  doc.setFont("helvetica", "bold");
+
+  // PATIENT INFORMATION
+
+  doc.setFont("helvetica","bold");
   doc.setFontSize(12);
-  doc.text("Patient Information", margin, y);
+
+  doc.text("Patient Information",margin,y);
+
   y += 8;
-  doc.setDrawColor(220, 229, 235);
-  doc.line(margin, y - 3, pageWidth - margin, y - 3);
-  doc.setFont("helvetica", "normal");
+
+  doc.setDrawColor(220,229,235);
+
+  doc.line(
+    margin,
+    y-3,
+    pageWidth-margin,
+    y-3
+  );
+
+  doc.setFont("helvetica","normal");
   doc.setFontSize(10);
-  doc.text("Patient name: " + name, margin, y + 3);
-  doc.text("Gender: " + gender, margin, y + 11);
-  doc.text("Age: " + age + " years", margin + 85, y + 11);
-  doc.text("Assessment date: " + assessmentDate, margin, y + 19);
-  doc.text("Question language: " + selectedLanguage, margin + 85, y + 19);
+
+  doc.text("Name: " + name,margin,y+3);
+
+  doc.text("Gender: " + gender,margin,y+11);
+
+  doc.text("Age: " + age + " years",margin+85,y+11);
+
+  doc.text("Assessment date: " + assessmentDate,margin,y+19);
+
+  doc.text(
+    "Question language: " + selectedLanguage,
+    margin+85,
+    y+19
+  );
+
   y += 34;
 
-  // Total assessment score only (no domain-wise bifurcation)
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(12);
-  doc.text("Assessment Summary", margin, y);
-  y += 8;
-  doc.line(margin, y - 3, pageWidth - margin, y - 3);
 
-  doc.setFillColor(232, 243, 248);
-  doc.roundedRect(margin, y - 1, contentWidth, 23, 2, 2, "F");
-  doc.setTextColor(36, 51, 66);
-  doc.setFont("helvetica", "bold");
+  // ASSESSMENT SUMMARY
+
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(12);
+
+  doc.text("Assessment Summary",margin,y);
+
+  y += 8;
+
+  doc.line(
+    margin,
+    y-3,
+    pageWidth-margin,
+    y-3
+  );
+
+
+  // TOTAL SCORE
+
+  doc.setFillColor(232,243,248);
+
+  doc.roundedRect(
+    margin,
+    y-1,
+    contentWidth,
+    23,
+    2,
+    2,
+    "F"
+  );
+
+  doc.setTextColor(36,51,66);
+
+  doc.setFont("helvetica","bold");
   doc.setFontSize(11);
-  doc.text("Total WOMAC Score", margin + 4, y + 8);
+
+  doc.text("Total WOMAC Score",margin+4,y+8);
+
   doc.setFontSize(17);
-  doc.setTextColor(23, 75, 114);
-  doc.text(total + " / 96", pageWidth - margin - 4, y + 10, { align: "right" });
+
+  doc.setTextColor(23,75,114);
+
+  doc.text(
+    total + " / 96",
+    pageWidth-margin-4,
+    y+10,
+    {align:"right"}
+  );
+
   y += 31;
-  doc.setFont("helvetica", "bold");
+
+  doc.setFont("helvetica","bold");
   doc.setFontSize(11);
-  doc.setTextColor(36, 51, 66);
-  doc.text("Interpretation: " + band.label, margin, y);
+
+  doc.setTextColor(36,51,66);
+
+  doc.text(
+    "Interpretation: " + band.label,
+    margin,
+    y
+  );
+
   y += 11;
 
-  // Required score interpretation scale
-  doc.setFont("helvetica", "bold");
+
+  // SCORE INTERPRETATION SCALE
+
+  doc.setFont("helvetica","bold");
   doc.setFontSize(11);
-  doc.text("Score Interpretation Scale", margin, y);
+
+  doc.text("Score Interpretation Scale",margin,y);
+
   y += 7;
+
   const scaleRows = [
-    ["0-24", "Mild symptoms", "mild"],
-    ["25-48", "Moderate symptoms", "moderate"],
-    ["49-72", "Severe symptoms", "severe"],
-    ["73-96", "Advanced OA", "advanced"]
+    ["0-24","Mild symptoms","mild"],
+    ["25-48","Moderate symptoms","moderate"],
+    ["49-72","Severe symptoms","severe"],
+    ["73-96","Advanced OA","advanced"]
   ];
+
   scaleRows.forEach(row => {
+
     const active = row[2] === band.key;
+
     if (active) {
-      doc.setFillColor(232, 243, 248);
-      doc.roundedRect(margin, y - 4, contentWidth, 9, 1.5, 1.5, "F");
+
+      doc.setFillColor(232,243,248);
+
+      doc.roundedRect(
+        margin,
+        y-4,
+        contentWidth,
+        9,
+        1.5,
+        1.5,
+        "F"
+      );
     }
-    doc.setFont("helvetica", active ? "bold" : "normal");
+
+    doc.setFont(
+      "helvetica",
+      active ? "bold" : "normal"
+    );
+
     doc.setFontSize(10);
-    doc.setTextColor(36, 51, 66);
-    doc.text(row[0], margin + 3, y + 2);
-    doc.text(row[1], margin + 34, y + 2);
+
+    doc.setTextColor(36,51,66);
+
+    doc.text(row[0],margin+3,y+2);
+
+    doc.text(row[1],margin+34,y+2);
+
     y += 10;
+
   });
 
-  // Footer
-  doc.setFontSize(8);
-  doc.setTextColor(100, 117, 134);
-  doc.text("WOMAC Osteoarthritis Assessment", margin, 285);
-  doc.text("Page 1", pageWidth - margin, 285, { align: "right" });
 
-  const safeName = name.replace(/[^a-z0-9_-]+/gi, "_").replace(/^_+|_+$/g, "") || "Patient";
+  // PDF FOOTER
+
+  doc.setFontSize(8);
+
+  doc.setTextColor(100,117,134);
+
+  doc.text(
+    "WOMAC Osteoarthritis Assessment",
+    margin,
+    285
+  );
+
+  doc.text(
+    "Page 1",
+    pageWidth-margin,
+    285,
+    {align:"right"}
+  );
+
+
+  // SAVE PDF
+
+  const safeName = name
+    .replace(/[^a-z0-9_-]+/gi,"_")
+    .replace(/^_+|_+$/g,"") || "Patient";
+
   doc.save("WOMAC_Report_" + safeName + ".pdf");
+
 });
+
+
+// RESET FORM
+
 $("reset").addEventListener("click", () => {
+
   $("result").style.display = "none";
+
   $("download").style.display = "none";
+
   $("error").style.display = "none";
+
   lastReportReady = false;
+
   $("questionLanguage").value = "en";
+
   renderQuestions("en");
+
 });
+
 </script>
 </body>
 </html>
